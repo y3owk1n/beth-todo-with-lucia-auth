@@ -1,9 +1,20 @@
-import { t } from "elysia";
-import { AppContext } from "../../util/route-helper";
+import { RouteHandler } from "../../util/route-helper";
 import { auth } from "../../auth/lucia";
+import { ElysiaErrors } from "elysia/error";
+import ErrorAlert from "../../components/error-alert";
+import { Type } from "@sinclair/typebox";
 
-export const post = {
-  handler: async (context: AppContext) => {
+const registerSchema = Type.Object({
+  email: Type.String({
+    error: "Email is required",
+  }),
+  password: Type.String({
+    error: "Password is required",
+  }),
+});
+
+export const post: RouteHandler<typeof registerSchema, undefined> = {
+  handler: async (context) => {
     const body = context.body;
 
     try {
@@ -39,9 +50,9 @@ export const post = {
     }
   },
   hooks: {
-    body: t.Object({
-      email: t.String(),
-      password: t.String(),
-    }),
+    body: registerSchema,
+  },
+  error(error: ElysiaErrors) {
+    return <ErrorAlert message={error.message} />;
   },
 };

@@ -1,14 +1,16 @@
-import { t } from "elysia";
 import { deleteTodoById } from "../../db/schema/todo";
-import { AppContext } from "../../util/route-helper";
+import { AppContext, RouteHandler } from "../../util/route-helper";
+import { Type } from "@sinclair/typebox";
 
-export const del = {
+const paramsSchema = Type.Object({
+  id: Type.String(),
+});
+
+export const del: RouteHandler<undefined, typeof paramsSchema> = {
   handler: async (context: AppContext) => {
     await deleteTodoById(context.params.id);
   },
   hooks: {
-    params: t.Object({
-      id: t.Numeric(),
-    }),
+    params: paramsSchema,
   },
 };

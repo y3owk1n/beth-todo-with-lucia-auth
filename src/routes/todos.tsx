@@ -1,4 +1,3 @@
-import * as elements from "typed-html";
 import BaseHtml from "../components/base-html";
 
 export async function get() {

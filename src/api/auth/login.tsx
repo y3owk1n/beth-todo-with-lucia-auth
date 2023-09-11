@@ -1,13 +1,21 @@
-import { t } from "elysia";
-import { AppContext } from "../../util/route-helper";
+import { RouteHandler } from "../../util/route-helper";
 import { auth } from "../../auth/lucia";
 import { ElysiaErrors } from "elysia/error";
 import ErrorAlert from "../../components/error-alert";
-import * as elements from "typed-html";
 import { LuciaError } from "lucia";
+import { Type } from "@sinclair/typebox";
 
-export const post = {
-  handler: async (context: AppContext) => {
+const loginSchema = Type.Object({
+  email: Type.String({
+    error: "Email is required",
+  }),
+  password: Type.String({
+    error: "Password is required",
+  }),
+});
+
+export const post: RouteHandler<typeof loginSchema, undefined> = {
+  handler: async (context) => {
     const body = context.body;
 
     try {
@@ -44,18 +52,12 @@ export const post = {
         // incorrect password
         return <ErrorAlert message="Invalid credentials" />;
       }
+
       return <ErrorAlert message={e.message} />;
     }
   },
   hooks: {
-    body: t.Object({
-      email: t.String({
-        error: "Email is required",
-      }),
-      password: t.String({
-        error: "Password is required",
-      }),
-    }),
+    body: loginSchema,
   },
   error(error: ElysiaErrors) {
     return <ErrorAlert message={error.message} />;

@@ -7,7 +7,8 @@ function LoginForm() {
       hx-post="/api/auth/login"
       hx-target="#login-error"
       hx-swap="innerHTML"
-      _="on htmx:afterRequest.details.isError !== true reset() me"
+      _="on htmx:afterRequest log detail
+            if detail.successful === true reset() me"
     >
       <h1>Login</h1>
       <input

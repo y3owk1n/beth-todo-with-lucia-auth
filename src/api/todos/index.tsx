@@ -1,6 +1,5 @@
 import { addTodo, getTodos } from "../../db/schema/todo";
 
-import * as elements from "typed-html";
 import TodoList from "../../components/todo-list";
 import { t } from "elysia";
 import TodoItem from "../../components/todo-item";

@@ -1,4 +1,3 @@
-import * as elements from "typed-html";
 import { Session } from "lucia";
 
 function UserInfo(user: Session["user"]) {

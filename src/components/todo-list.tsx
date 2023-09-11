@@ -1,4 +1,3 @@
-import * as elements from "typed-html";
 import TodoForm from "./todo-form";
 import TodoItem from "./todo-item";
 import { Todo } from "../db/schema/todo";

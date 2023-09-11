@@ -1,5 +1,3 @@
-import * as elements from "typed-html";
-
 function RegisterForm() {
   return (
     <form

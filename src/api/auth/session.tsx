@@ -1,14 +1,13 @@
-import { AppContext } from "../../util/route-helper";
+import { RouteHandler } from "../../util/route-helper";
 
-import * as elements from "typed-html";
 import UserInfo from "../../components/user-info";
 import { auth } from "../../auth/lucia";
+import { ElysiaErrors } from "elysia/error";
+import ErrorAlert from "../../components/error-alert";
 
-export const get = {
-  handler: async (context: AppContext) => {
+export const get: RouteHandler = {
+  handler: async (context) => {
     try {
-      // const { session, sessionCookie } = await getSession(context.request);
-
       const authRequest = auth.handleRequest(context);
       const session = await authRequest.validate();
 
@@ -25,5 +24,8 @@ export const get = {
       };
       return;
     }
+  },
+  error(error: ElysiaErrors) {
+    return <ErrorAlert message={error.message} />;
   },
 };

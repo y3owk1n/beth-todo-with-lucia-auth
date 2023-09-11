@@ -1,4 +1,3 @@
-import * as elements from "typed-html";
 import { Todo } from "../db/schema/todo";
 
 function TodoItem({ id, content, completed }: Todo) {

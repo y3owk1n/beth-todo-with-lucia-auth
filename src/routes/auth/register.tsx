@@ -1,4 +1,3 @@
-import * as elements from "typed-html";
 import BaseHtml from "../../components/base-html";
 import RegisterForm from "../../components/register-form";
 

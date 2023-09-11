@@ -1,8 +1,8 @@
-import { AppContext } from "../../util/route-helper";
+import { RouteHandler } from "../../util/route-helper";
 import { auth } from "../../auth/lucia";
 
-export const post = {
-  handler: async (context: AppContext) => {
+export const post: RouteHandler = {
+  handler: async (context) => {
     const authRequest = auth.handleRequest(context);
     const session = await authRequest.validate(); // or `authRequest.validateBearerToken()`
     if (!session) {
