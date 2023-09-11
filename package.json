@@ -27,6 +27,7 @@
     "drizzle-orm": "^0.28.6",
     "elysia": "^0.6.20",
     "elysia-autoroutes": "^0.2.2",
+    "elysia-helmet": "^1.0.1",
     "lucia": "^2.5.0",
     "postgres": "^3.3.5",
     "sanitize-html": "^2.11.0",

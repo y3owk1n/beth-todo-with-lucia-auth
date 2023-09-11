@@ -1,6 +1,5 @@
 import { AppContext } from "../../util/route-helper";
 import { auth } from "../../auth/lucia";
-import { getSession } from "../../auth/user";
 
 export const post = {
   handler: async (context: AppContext) => {
@@ -15,8 +14,6 @@ export const post = {
 
     await auth.deleteDeadUserSessions(session.user.userId);
 
-    // context.set.status = 302;
-    // context.set.redirect = "/";
     context.set.headers = {
       "Hx-Redirect": "/",
       "Set-Cookie": "",

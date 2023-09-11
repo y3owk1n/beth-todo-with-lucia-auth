@@ -21,6 +21,7 @@ function RegisterForm() {
         class="border border-black px-2 py-1"
       />
       <button type="submit">Submit</button>
+      <a href="/auth/login">Login Now</a>
     </form>
   );
 }

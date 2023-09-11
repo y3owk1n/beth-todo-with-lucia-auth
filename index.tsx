@@ -1,7 +1,7 @@
 import Elysia from "elysia";
 import { html } from "@elysiajs/html";
-import { autoroutes } from "elysia-autoroutes";
 import cookie from "@elysiajs/cookie";
+import { autoroutes } from "elysia-autoroutes";
 
 export const app = new Elysia()
   .use(html())

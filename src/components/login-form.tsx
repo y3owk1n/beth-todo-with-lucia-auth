@@ -5,7 +5,9 @@ function LoginForm() {
     <form
       class="flex flex-col gap-3"
       hx-post="/api/auth/login"
-      _="on submit target.reset()"
+      hx-target="#login-error"
+      hx-swap="innerHTML"
+      _="on htmx:afterRequest.details.isError !== true reset() me"
     >
       <h1>Login</h1>
       <input
@@ -20,7 +22,9 @@ function LoginForm() {
         placeholder="password"
         class="border border-black px-2 py-1"
       />
+      <div id="login-error"></div>
       <button type="submit">Submit</button>
+      <a href="/auth/register">Register Now</a>
     </form>
   );
 }
