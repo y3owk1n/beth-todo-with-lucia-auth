@@ -1,0 +1,35 @@
+{
+  "name": "beth-stack",
+  "module": "index.ts",
+  "type": "module",
+  "scripts": {
+    "dev": "bun run --watch index.tsx",
+    "db:generate": "drizzle-kit generate:pg",
+    "db:migrate": "bun run src/db/migrate.ts",
+    "db:studio": "drizzle-kit studio --port 3010 --verbose"
+  },
+  "devDependencies": {
+    "@types/sanitize-html": "^2.9.0",
+    "bun-types": "latest",
+    "drizzle-kit": "^0.19.13",
+    "typed-html": "^3.0.1"
+  },
+  "peerDependencies": {
+    "typescript": "^5.0.0"
+  },
+  "dependencies": {
+    "@elysiajs/cookie": "^0.6.1",
+    "@elysiajs/html": "^0.6.4",
+    "@lucia-auth/adapter-postgresql": "^2.0.1",
+    "@paralleldrive/cuid2": "^2.2.2",
+    "@types/cookie": "^0.5.2",
+    "cookie": "^0.5.0",
+    "drizzle-orm": "^0.28.6",
+    "elysia": "^0.6.20",
+    "elysia-autoroutes": "^0.2.2",
+    "lucia": "^2.5.0",
+    "postgres": "^3.3.5",
+    "sanitize-html": "^2.11.0",
+    "zod": "^3.22.2"
+  }
+}
