@@ -1,5 +1,5 @@
-import BaseHtml from "../../components/base-html";
-import RegisterForm from "../../components/register-form";
+import BaseHtml from "@/components/base-html";
+import RegisterForm from "@/components/register-form";
 
 export async function get() {
   return (

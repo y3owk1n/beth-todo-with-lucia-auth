@@ -1,8 +1,8 @@
-import { RouteHandler } from "../../util/route-helper";
-import { auth } from "../../auth/lucia";
 import { ElysiaErrors } from "elysia/error";
-import ErrorAlert from "../../components/error-alert";
 import { Type } from "@sinclair/typebox";
+import { RouteHandler } from "util/route-helper";
+import { auth } from "@/auth/lucia";
+import ErrorAlert from "@/components/error-alert";
 
 const registerSchema = Type.Object({
   email: Type.String({

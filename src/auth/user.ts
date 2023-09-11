@@ -1,6 +1,6 @@
-import { AppContext } from "../util/route-helper";
-import { auth } from "./lucia";
 import cookie from "cookie";
+import { AppContext } from "util/route-helper";
+import { auth } from "./lucia";
 
 export async function getSession(request: AppContext["request"]) {
   const cookies = request["headers"].get("cookie");

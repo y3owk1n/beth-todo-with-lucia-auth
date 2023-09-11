@@ -1,5 +1,16 @@
 {
   "compilerOptions": {
+    "baseUrl": "src",
+    "paths": {
+      "@/api/*": ["api/*"],
+      "@/auth/*": ["auth/*"],
+      "@/components/*": ["components/*"],
+      "@/db/*": ["db/*"],
+      "@/lib/*": ["lib/*"],
+      "@/routes/*": ["routes/*"],
+      "@/types/*": ["types/*"],
+      "@/utils/*": ["utils/*"]
+    },
     "lib": ["ESNext"],
     "module": "esnext",
     "target": "esnext",

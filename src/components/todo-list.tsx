@@ -1,6 +1,6 @@
+import { Todo } from "@/db/schema/todo";
 import TodoForm from "./todo-form";
 import TodoItem from "./todo-item";
-import { Todo } from "../db/schema/todo";
 
 function TodoList({ todos }: { todos: Todo[] }) {
   return (

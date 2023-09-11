@@ -1,5 +1,5 @@
-import { RouteHandler } from "../../util/route-helper";
-import { auth } from "../../auth/lucia";
+import { auth } from "@/auth/lucia";
+import { RouteHandler } from "util/route-helper";
 
 export const post: RouteHandler = {
   handler: async (context) => {

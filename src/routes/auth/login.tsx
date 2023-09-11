@@ -1,5 +1,5 @@
-import BaseHtml from "../../components/base-html";
-import LoginForm from "../../components/login-form";
+import BaseHtml from "@/components/base-html";
+import LoginForm from "@/components/login-form";
 
 export async function get() {
   return (

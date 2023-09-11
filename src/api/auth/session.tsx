@@ -1,9 +1,9 @@
-import { RouteHandler } from "../../util/route-helper";
-
-import UserInfo from "../../components/user-info";
-import { auth } from "../../auth/lucia";
 import { ElysiaErrors } from "elysia/error";
-import ErrorAlert from "../../components/error-alert";
+import { authCookie } from "@/lib/constants";
+import { RouteHandler } from "util/route-helper";
+import { auth } from "@/auth/lucia";
+import UserInfo from "@/components/user-info";
+import ErrorAlert from "@/components/error-alert";
 
 export const get: RouteHandler = {
   handler: async (context) => {
@@ -12,15 +12,18 @@ export const get: RouteHandler = {
       const session = await authRequest.validate();
 
       if (!session) {
-        return "No user";
+        context.removeCookie(authCookie);
+        context.set.headers = {
+          "Hx-Redirect": "/",
+        };
+        return;
       }
 
       return <UserInfo {...session.user} />;
     } catch (error) {
-      context.set.status = 302;
-      context.set.redirect = "/";
+      context.removeCookie(authCookie);
       context.set.headers = {
-        "Set-Cookie": "",
+        "Hx-Redirect": "/",
       };
       return;
     }

@@ -1,9 +1,9 @@
-import { RouteHandler } from "../../util/route-helper";
-import { auth } from "../../auth/lucia";
 import { ElysiaErrors } from "elysia/error";
-import ErrorAlert from "../../components/error-alert";
 import { LuciaError } from "lucia";
 import { Type } from "@sinclair/typebox";
+import { RouteHandler } from "util/route-helper";
+import { auth } from "@/auth/lucia";
+import ErrorAlert from "@/components/error-alert";
 
 const loginSchema = Type.Object({
   email: Type.String({
@@ -35,8 +35,6 @@ export const post: RouteHandler<typeof loginSchema, undefined> = {
 
       const sessionCookie = auth.createSessionCookie(session);
 
-      // context.set.status = 302;
-      // context.set.redirect = "/todos";
       context.set.headers = {
         "Hx-Redirect": "/todos",
         "Set-Cookie": sessionCookie.serialize(),
@@ -45,7 +43,6 @@ export const post: RouteHandler<typeof loginSchema, undefined> = {
     } catch (e: any) {
       if (e instanceof LuciaError && e.message === "AUTH_INVALID_KEY_ID") {
         // invalid key
-
         return <ErrorAlert message="Invalid key" />;
       }
       if (e instanceof LuciaError && e.message === "AUTH_INVALID_PASSWORD") {

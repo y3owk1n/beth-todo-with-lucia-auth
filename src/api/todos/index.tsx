@@ -1,9 +1,14 @@
-import { addTodo, getTodos } from "../../db/schema/todo";
+import TodoItem from "@/components/todo-item";
+import TodoList from "@/components/todo-list";
+import { addTodo, getTodos } from "@/db/schema/todo";
+import { Type } from "@sinclair/typebox";
+import { RouteHandler } from "util/route-helper";
 
-import TodoList from "../../components/todo-list";
-import { t } from "elysia";
-import TodoItem from "../../components/todo-item";
-import { AppContext } from "../../util/route-helper";
+const bodySchema = Type.Object({
+  content: Type.String({
+    error: "Content is required",
+  }),
+});
 
 export async function get() {
   const todos = await getTodos();
@@ -11,15 +16,13 @@ export async function get() {
   return <TodoList todos={todos} />;
 }
 
-export const post = {
-  handler: async (context: AppContext) => {
+export const post: RouteHandler<typeof bodySchema, undefined> = {
+  handler: async (context) => {
     const newTodo = await addTodo(context.body.content);
 
     return <TodoItem {...newTodo} />;
   },
   hooks: {
-    body: t.Object({
-      content: t.String(),
-    }),
+    body: bodySchema,
   },
 };

@@ -1,4 +1,4 @@
-import { Todo } from "../db/schema/todo";
+import { Todo } from "@/db/schema/todo";
 
 function TodoItem({ id, content, completed }: Todo) {
   return (

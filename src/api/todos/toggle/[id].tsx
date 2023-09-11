@@ -1,7 +1,7 @@
-import { toggleTodoCompletion } from "../../../db/schema/todo";
-import TodoItem from "../../../components/todo-item";
-import { RouteHandler } from "../../../util/route-helper";
+import TodoItem from "@/components/todo-item";
+import { toggleTodoCompletion } from "@/db/schema/todo";
 import { Type } from "@sinclair/typebox";
+import { RouteHandler } from "util/route-helper";
 
 const paramsSchema = Type.Object({
   id: Type.String(),

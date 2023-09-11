@@ -1,17 +1,8 @@
-import { Context, UnwrapSchema, t } from "elysia";
+import { Context } from "elysia";
 import type { App } from "../..";
 import { CookieRequest } from "@elysiajs/cookie";
 import { ElysiaErrors } from "elysia/error";
-import {
-  SchemaOptions,
-  Static,
-  TAnySchema,
-  TKind,
-  TObject,
-  TSchema,
-  TString,
-  Type,
-} from "@sinclair/typebox";
+import { Static, TSchema } from "@sinclair/typebox";
 
 type PluginHtmlContext = {
   sanitize: any;
@@ -48,10 +39,6 @@ export type RouteHandler<
     context: AppContext<
       Body extends Partial<TSchema> ? Static<Body> : undefined,
       Params extends Partial<TSchema> ? Static<Params> : undefined
-
-      // UnwrapSchema<
-      //   Params extends UnwrapSchema<infer Schema> ? Schema : undefined
-      // >
     >
   ) => Promise<string | undefined | void>;
   error?(error: ElysiaErrors): string;

@@ -1,4 +1,4 @@
-import BaseHtml from "../components/base-html";
+import BaseHtml from "@/components/base-html";
 
 export async function get() {
   return (
