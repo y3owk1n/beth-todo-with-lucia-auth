@@ -1,3 +1,4 @@
+import ErrorAlert from "@/components/error-alert";
 import TodoItem from "@/components/todo-item";
 import TodoList from "@/components/todo-list";
 import { addTodo, getTodos } from "@/db/schema/todo";
@@ -24,5 +25,8 @@ export const post: RouteHandler<typeof bodySchema, undefined> = {
   },
   hooks: {
     body: bodySchema,
+    error: ({ error }) => {
+      return <ErrorAlert message={error.message} />;
+    },
   },
 };

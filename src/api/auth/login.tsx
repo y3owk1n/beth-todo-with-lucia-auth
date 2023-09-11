@@ -1,4 +1,3 @@
-import { ElysiaErrors } from "elysia/error";
 import { LuciaError } from "lucia";
 import { Type } from "@sinclair/typebox";
 import { RouteHandler } from "util/route-helper";
@@ -41,9 +40,10 @@ export const post: RouteHandler<typeof loginSchema, undefined> = {
       };
       return;
     } catch (e: any) {
+      context.set.status = 400;
       if (e instanceof LuciaError && e.message === "AUTH_INVALID_KEY_ID") {
         // invalid key
-        return <ErrorAlert message="Invalid key" />;
+        return <ErrorAlert message="No user found" />;
       }
       if (e instanceof LuciaError && e.message === "AUTH_INVALID_PASSWORD") {
         // incorrect password
@@ -55,8 +55,8 @@ export const post: RouteHandler<typeof loginSchema, undefined> = {
   },
   hooks: {
     body: loginSchema,
-  },
-  error(error: ElysiaErrors) {
-    return <ErrorAlert message={error.message} />;
+    error: ({ error }) => {
+      return <ErrorAlert message={error.message} />;
+    },
   },
 };

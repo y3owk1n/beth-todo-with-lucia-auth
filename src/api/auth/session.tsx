@@ -1,9 +1,7 @@
-import { ElysiaErrors } from "elysia/error";
 import { authCookie } from "@/lib/constants";
 import { RouteHandler } from "util/route-helper";
 import { auth } from "@/auth/lucia";
 import UserInfo from "@/components/user-info";
-import ErrorAlert from "@/components/error-alert";
 
 export const get: RouteHandler = {
   handler: async (context) => {
@@ -27,8 +25,5 @@ export const get: RouteHandler = {
       };
       return;
     }
-  },
-  error(error: ElysiaErrors) {
-    return <ErrorAlert message={error.message} />;
   },
 };

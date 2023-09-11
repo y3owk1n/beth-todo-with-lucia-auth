@@ -1,4 +1,5 @@
 import { auth } from "@/auth/lucia";
+import { authCookie } from "@/lib/constants";
 import { RouteHandler } from "util/route-helper";
 
 export const post: RouteHandler = {
@@ -14,9 +15,10 @@ export const post: RouteHandler = {
 
     await auth.deleteDeadUserSessions(session.user.userId);
 
+    context.removeCookie(authCookie);
+
     context.set.headers = {
       "Hx-Redirect": "/",
-      "Set-Cookie": "",
     };
 
     return;

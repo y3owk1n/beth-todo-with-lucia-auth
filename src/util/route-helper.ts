@@ -1,4 +1,4 @@
-import { Context } from "elysia";
+import { Context, ElysiaInstance, LocalHook } from "elysia";
 import type { App } from "../..";
 import { CookieRequest } from "@elysiajs/cookie";
 import { ElysiaErrors } from "elysia/error";
@@ -31,6 +31,11 @@ export type AppContext<
 
 export type SchemaGeneric = TSchema | undefined;
 
+export type RouteHooks = LocalHook<
+  App["$schema"],
+  App extends ElysiaInstance<infer Instance> ? Instance : any
+>;
+
 export type RouteHandler<
   Body extends SchemaGeneric = TSchema,
   Params extends SchemaGeneric = TSchema
@@ -45,9 +50,9 @@ export type RouteHandler<
 } & {
   hooks?: Body extends undefined
     ? Params extends undefined
-      ? {}
-      : { params: Params }
+      ? RouteHooks
+      : RouteHooks & { params: Params }
     : Params extends undefined
-    ? { body: Body }
-    : { body: Body; params: Params };
+    ? RouteHooks & { body: Body }
+    : RouteHooks & { body: Body; params: Params };
 };

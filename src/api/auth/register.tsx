@@ -51,8 +51,8 @@ export const post: RouteHandler<typeof registerSchema, undefined> = {
   },
   hooks: {
     body: registerSchema,
-  },
-  error(error: ElysiaErrors) {
-    return <ErrorAlert message={error.message} />;
+    error: ({ error }) => {
+      return <ErrorAlert message={error.message} />;
+    },
   },
 };

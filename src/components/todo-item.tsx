@@ -8,17 +8,24 @@ function TodoItem({ id, content, completed }: Todo) {
         type="checkbox"
         checked={completed}
         hx-post={`/api/todos/toggle/${id}`}
-        hx-target="closest div"
-        hx-swap="outerHTML"
+        _="on htmx:beforeRequest remove #error-message
+            on htmx:afterRequest
+            if detail.successful === false
+                put detail.xhr.responseText after closest parent <div />
+            else put detail.xhr.responseText into me"
       />
       <button
         class="text-red-500"
         hx-delete={`/api/todos/${id}`}
-        hx-target="closest div"
-        hx-swap="outerHTML"
+        _="on htmx:beforeRequest remove #error-message
+            on htmx:afterRequest
+            if detail.successful === false
+                put detail.xhr.responseText after closest parent <div />
+            else put detail.xhr.responseText into me"
       >
         Delete
       </button>
+      <div id="todo-error"></div>
     </div>
   );
 }

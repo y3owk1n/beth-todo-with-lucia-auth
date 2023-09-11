@@ -1,3 +1,4 @@
+import ErrorAlert from "@/components/error-alert";
 import { deleteTodoById } from "@/db/schema/todo";
 import { Type } from "@sinclair/typebox";
 import { RouteHandler } from "util/route-helper";
@@ -12,5 +13,8 @@ export const del: RouteHandler<undefined, typeof paramsSchema> = {
   },
   hooks: {
     params: paramsSchema,
+    error: ({ error }) => {
+      return <ErrorAlert message={error.message} />;
+    },
   },
 };
