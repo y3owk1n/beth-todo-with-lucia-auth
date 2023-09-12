@@ -7,7 +7,7 @@
     "tw:dev": "tailwindcss -i src/styles/index.css -o public/main.css --watch",
     "tw:build": "tailwindcss -i src/styles/index.css -o public/main.css",
     "dev": "concurrently \"bun run script-to-dist\" \"bun run tw:dev\" \"bun run --watch index.tsx\"",
-    "build": "concurrently \"bun run script-to-dist\" \"bun run tw:build\" \"bun run db:migrate\"",
+    "prepare": "concurrently \"bun run script-to-dist\" \"bun run tw:build\" \"bun run db:migrate\"",
     "start": "bun run index.tsx",
     "db:generate": "drizzle-kit generate:pg",
     "db:migrate": "bun run src/db/migrate.ts",

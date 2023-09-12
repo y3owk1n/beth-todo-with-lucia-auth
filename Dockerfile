@@ -1,9 +1,19 @@
 FROM oven/bun
+
 WORKDIR /app
-COPY package.json package.json
-COPY bun.lockb bun.lockb
+
+COPY package.json .
+COPY bun.lockb .
+
 RUN bun install
-RUN bun build
-COPY . .
-EXPOSE 3000
+RUN bun prepare
+
+COPY src src
+COPY tsconfig.json .
+COPY public public
+
+ENV NODE_ENV production
+
 CMD ['bun', 'start']
+
+EXPOSE 3000
