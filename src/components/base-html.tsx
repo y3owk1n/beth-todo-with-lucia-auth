@@ -1,4 +1,5 @@
 import * as elements from "typed-html";
+import "@fontsource-variable/inter";
 
 function BaseHtml({ children }: elements.Children) {
   return (
@@ -7,9 +8,9 @@ function BaseHtml({ children }: elements.Children) {
         <meta charset="UTF-8" />
         <meta name="vieport" content="width=device-width, initial-scale=1.0" />
         <title>The Beth Stack</title>
-        <script src="https://unpkg.com/htmx.org@1.9.3"></script>
-        <script src="https://cdn.tailwindcss.com"></script>
-        <script src="https://unpkg.com/hyperscript.org@0.9.9"></script>
+        <script src="/public/dist/htmx.min.js"></script>
+        <script src="/public/dist/hyperscript.min.js"></script>
+        <link href="/public/dist/main.css" rel="stylesheet"></link>
       </head>
       {children}
     </html>

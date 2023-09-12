@@ -3,7 +3,7 @@ function RegisterForm() {
     <form
       class="flex flex-col gap-3"
       hx-post="/api/auth/register"
-      _="on htmx:beforeRequest remove #register-error
+      _="on htmx:beforeRequest remove #error-message
             on htmx:afterRequest
             if detail.successful === false
                 put detail.xhr.responseText into #register-error

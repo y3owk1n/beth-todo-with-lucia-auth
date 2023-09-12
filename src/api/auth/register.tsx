@@ -1,4 +1,3 @@
-import { ElysiaErrors } from "elysia/error";
 import { Type } from "@sinclair/typebox";
 import { RouteHandler } from "util/route-helper";
 import { auth } from "@/auth/lucia";

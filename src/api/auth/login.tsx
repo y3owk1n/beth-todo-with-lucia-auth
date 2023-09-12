@@ -17,11 +17,13 @@ export const post: RouteHandler<typeof loginSchema, undefined> = {
   handler: async (context) => {
     const body = context.body;
 
+    await Bun.sleep(3000);
+
     try {
       const key = await auth.useKey(
         "email",
         body.email.toLowerCase(),
-        body.password
+        body.password,
       );
 
       const session = await auth.createSession({

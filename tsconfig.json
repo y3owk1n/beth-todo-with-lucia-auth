@@ -8,6 +8,7 @@
       "@/db/*": ["db/*"],
       "@/lib/*": ["lib/*"],
       "@/routes/*": ["routes/*"],
+      "@/styles/*": ["styles/*"],
       "@/types/*": ["types/*"],
       "@/utils/*": ["utils/*"]
     },
