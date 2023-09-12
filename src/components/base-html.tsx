@@ -9,11 +9,11 @@ function BaseHtml({ children }: PropsWithChildren) {
         <meta charset="UTF-8" />
         <meta name="vieport" content="width=device-width, initial-scale=1.0" />
         <title>The Beth Stack</title>
-        <script src="/public/dist/htmx.min.js"></script>
-        <script src="/public/dist/hyperscript.min.js"></script>
-        <link href="/public/dist/main.css" rel="stylesheet"></link>
-        <script src="/public/dist/htmx-disable-element.min.js"></script>
-        <script src="/public/dist/htmx-loading-states.min.js"></script>
+        <script src="/public/htmx.min.js"></script>
+        <script src="/public/hyperscript.min.js"></script>
+        <link href="/public/main.css" rel="stylesheet"></link>
+        <script src="/public/htmx-disable-element.min.js"></script>
+        <script src="/public/htmx-loading-states.min.js"></script>
       </head>
       <body class={"font-sans antialiased"}>{children}</body>
     </html>

@@ -1,11 +1,13 @@
 {
   "name": "beth-stack",
-  "module": "index.ts",
+  "module": "index.tsx",
   "type": "module",
   "scripts": {
     "script-to-dist": "bun run src/util/get-scripts-to-dist.ts",
-    "tw:dev": "tailwindcss -i src/styles/index.css -o public/dist/main.css --watch",
+    "tw:dev": "tailwindcss -i src/styles/index.css -o public/main.css --watch",
+    "tw:build": "tailwindcss -i src/styles/index.css -o public/main.css",
     "dev": "concurrently \"bun run script-to-dist\" \"bun run tw:dev\" \"bun run --watch index.tsx\"",
+    "start": "bun run index.tsx",
     "db:generate": "drizzle-kit generate:pg",
     "db:migrate": "bun run src/db/migrate.ts",
     "db:studio": "drizzle-kit studio --port 3010 --verbose"
