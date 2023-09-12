@@ -1,7 +1,8 @@
-import * as elements from "typed-html";
 import "@fontsource-variable/inter";
+import { PropsWithChildren } from "@kitajs/html";
+import "@kitajs/html/htmx";
 
-function BaseHtml({ children }: elements.Children) {
+function BaseHtml({ children }: PropsWithChildren) {
   return (
     <html lang="en">
       <head>
@@ -12,7 +13,7 @@ function BaseHtml({ children }: elements.Children) {
         <script src="/public/dist/hyperscript.min.js"></script>
         <link href="/public/dist/main.css" rel="stylesheet"></link>
       </head>
-      {children}
+      <body class={"font-sans antialiased"}>{children}</body>
     </html>
   );
 }

@@ -31,7 +31,8 @@
     "forceConsistentCasingInFileNames": true,
     "allowJs": true,
     "types": [
-      "bun-types" // add Bun global
+      "bun-types", // add Bun global
+      "node_modules/@kitajs/html/htmx"
     ]
   }
 }
