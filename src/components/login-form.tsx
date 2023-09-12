@@ -1,3 +1,5 @@
+import { Icons } from "./icons";
+
 function LoginForm() {
   return (
     <form
@@ -6,6 +8,7 @@ function LoginForm() {
       hx-target="#login-error"
       hx-swap="innerHTML"
       hx-swap-oob="true"
+      hx-indicator="#spinner"
       _="on htmx:beforeRequest remove #login-error
             on htmx:afterRequest
             if detail.successful === false
@@ -26,7 +29,13 @@ function LoginForm() {
         class="border border-black px-2 py-1"
       />
       <div id="login-error"></div>
-      <button type="submit">Submit</button>
+      <button
+        class="inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground shadow hover:bg-primary/90 h-9 px-4 py-2"
+        type="submit"
+      >
+        {/* <Icons.loader2 id="spinner" class="mr-2 w-6 h-6 animate-spin" /> */}
+        Submit
+      </button>
       <a href="/auth/register">Register Now</a>
     </form>
   );
