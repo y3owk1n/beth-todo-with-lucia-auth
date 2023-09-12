@@ -1,7 +1,7 @@
 import { Type } from "@sinclair/typebox";
 import { RouteHandler } from "util/route-helper";
 import { auth } from "@/auth/lucia";
-import ErrorAlert from "@/components/error-alert";
+import ServerErrorAlert from "@/components/server-error-alert";
 
 const registerSchema = Type.Object({
   email: Type.String({
@@ -15,6 +15,7 @@ const registerSchema = Type.Object({
 export const post: RouteHandler<typeof registerSchema, undefined> = {
   handler: async (context) => {
     const body = context.body;
+    await Bun.sleep(3000);
 
     try {
       const user = await auth.createUser({
@@ -51,7 +52,7 @@ export const post: RouteHandler<typeof registerSchema, undefined> = {
   hooks: {
     body: registerSchema,
     error: ({ error }) => {
-      return <ErrorAlert message={error.message} />;
+      return <ServerErrorAlert message={error.message} />;
     },
   },
 };

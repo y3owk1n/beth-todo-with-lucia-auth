@@ -4,6 +4,8 @@ import { RouteHandler } from "util/route-helper";
 
 export const post: RouteHandler = {
   handler: async (context) => {
+    await Bun.sleep(3000);
+
     const authRequest = auth.handleRequest(context);
     const session = await authRequest.validate(); // or `authRequest.validateBearerToken()`
     if (!session) {

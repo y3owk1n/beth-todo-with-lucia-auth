@@ -12,6 +12,8 @@ function BaseHtml({ children }: PropsWithChildren) {
         <script src="/public/dist/htmx.min.js"></script>
         <script src="/public/dist/hyperscript.min.js"></script>
         <link href="/public/dist/main.css" rel="stylesheet"></link>
+        <script src="/public/dist/htmx-disable-element.min.js"></script>
+        <script src="/public/dist/htmx-loading-states.min.js"></script>
       </head>
       <body class={"font-sans antialiased"}>{children}</body>
     </html>

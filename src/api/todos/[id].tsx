@@ -1,4 +1,4 @@
-import ErrorAlert from "@/components/error-alert";
+import ServerErrorAlert from "@/components/server-error-alert";
 import { deleteTodoById } from "@/db/schema/todo";
 import { Type } from "@sinclair/typebox";
 import { RouteHandler } from "util/route-helper";
@@ -9,12 +9,13 @@ const paramsSchema = Type.Object({
 
 export const del: RouteHandler<undefined, typeof paramsSchema> = {
   handler: async (context) => {
+    await Bun.sleep(3000);
     await deleteTodoById(context.params.id);
   },
   hooks: {
     params: paramsSchema,
     error: ({ error }) => {
-      return <ErrorAlert message={error.message} />;
+      return <ServerErrorAlert message={error.message} />;
     },
   },
 };

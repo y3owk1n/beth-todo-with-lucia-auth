@@ -1,4 +1,4 @@
-import ErrorAlert from "@/components/error-alert";
+import ServerErrorAlert from "@/components/server-error-alert";
 import TodoItem from "@/components/todo-item";
 import TodoList from "@/components/todo-list";
 import { addTodo, getTodos } from "@/db/schema/todo";
@@ -12,6 +12,7 @@ const bodySchema = Type.Object({
 });
 
 export async function get() {
+  await Bun.sleep(3000);
   const todos = await getTodos();
 
   return <TodoList todos={todos} />;
@@ -19,6 +20,7 @@ export async function get() {
 
 export const post: RouteHandler<typeof bodySchema, undefined> = {
   handler: async (context) => {
+    await Bun.sleep(3000);
     const newTodo = await addTodo(context.body.content);
 
     return <TodoItem {...newTodo} />;
@@ -26,7 +28,7 @@ export const post: RouteHandler<typeof bodySchema, undefined> = {
   hooks: {
     body: bodySchema,
     error: ({ error }) => {
-      return <ErrorAlert message={error.message} />;
+      return <ServerErrorAlert message={error.message} />;
     },
   },
 };

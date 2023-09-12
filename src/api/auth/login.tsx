@@ -2,7 +2,7 @@ import { LuciaError } from "lucia";
 import { Type } from "@sinclair/typebox";
 import { RouteHandler } from "util/route-helper";
 import { auth } from "@/auth/lucia";
-import ErrorAlert from "@/components/error-alert";
+import ServerErrorAlert from "@/components/server-error-alert";
 
 const loginSchema = Type.Object({
   email: Type.String({
@@ -23,7 +23,7 @@ export const post: RouteHandler<typeof loginSchema, undefined> = {
       const key = await auth.useKey(
         "email",
         body.email.toLowerCase(),
-        body.password,
+        body.password
       );
 
       const session = await auth.createSession({
@@ -45,20 +45,20 @@ export const post: RouteHandler<typeof loginSchema, undefined> = {
       context.set.status = 400;
       if (e instanceof LuciaError && e.message === "AUTH_INVALID_KEY_ID") {
         // invalid key
-        return <ErrorAlert message="No user found" />;
+        return <ServerErrorAlert message="No user found" />;
       }
       if (e instanceof LuciaError && e.message === "AUTH_INVALID_PASSWORD") {
         // incorrect password
-        return <ErrorAlert message="Invalid credentials" />;
+        return <ServerErrorAlert message="Invalid credentials" />;
       }
 
-      return <ErrorAlert message={e.message} />;
+      return <ServerErrorAlert message={e.message} />;
     }
   },
   hooks: {
     body: loginSchema,
     error: ({ error }) => {
-      return <ErrorAlert message={error.message} />;
+      return <ServerErrorAlert message={error.message} />;
     },
   },
 };
