@@ -12,7 +12,7 @@ const bodySchema = Type.Object({
 });
 
 export async function get() {
-  await Bun.sleep(3000);
+  // await Bun.sleep(3000);
   const todos = await getTodos();
 
   return <TodoList todos={todos} />;

@@ -1,11 +1,25 @@
-import BaseHtml from "@/components/base-html";
+import { auth } from "@/auth/lucia";
+import { authCookie } from "@/lib/constants";
+import { RouteHandler } from "util/route-helper";
 
-export async function get() {
-  return (
-    <BaseHtml>
-      <body class="flex w-full h-screen justify-center items-center">
-        <a href="/auth/login">Login Now</a>
-      </body>
-    </BaseHtml>
-  );
-}
+export const get: RouteHandler = {
+  handler: async (context) => {
+    try {
+      const authRequest = auth.handleRequest(context);
+      const session = await authRequest.validate();
+
+      if (!session) {
+        context.set.redirect = "/auth/login";
+        return;
+      }
+
+      context.set.redirect = "/todos";
+    } catch (error) {
+      context.removeCookie(authCookie);
+      context.set.headers = {
+        "Hx-Redirect": "/",
+      };
+      return;
+    }
+  },
+};

@@ -9,7 +9,7 @@ function TodoForm() {
       hx-post="/api/todos"
       hx-swap="afterend"
       hx-ext="loading-states"
-      data-loading-target="#loader"
+      data-loading-target="#todo-form-loader"
       data-loading-class-remove="hidden"
       _="on htmx:beforeRequest remove #server-error
         on htmx:afterRequest
@@ -19,7 +19,10 @@ function TodoForm() {
     >
       <Input type="text" name="content" placeholder="content" />
       <Button id="submit" data-loading-disable data-loading-busy type="submit">
-        <Icons.loader2 id="loader" class="hidden mr-2 w-6 h-6 animate-spin" />
+        <Icons.loader2
+          id="todo-form-loader"
+          class="hidden mr-2 w-6 h-6 animate-spin"
+        />
         Submit
       </Button>
     </form>
