@@ -1,18 +1,19 @@
-# beth-stack
+## Beth Stack With Lucia Auth
 
-To install dependencies:
+- Bun
+- Lucia Auth
+- drizzle
+- tailwindcss
+- elysiajs
 
-```bash
-bun install
-```
+---
 
-To run:
+## Todo
 
-```bash
-bun run index.ts
-```
-
-This project was created using `bun init` in bun v1.0.0. [Bun](https://bun.sh) is a fast all-in-one JavaScript runtime.
+[ ] Middleware for auth check
+[ ] Error handling sitewide
+[ ] Loading handling sitewide
+[ ] More components and better UI
 
 ---
 
