@@ -1,7 +1,6 @@
 import ServerErrorAlert from "@/components/server-error-alert";
 import TodoEditable from "@/components/todo-editable";
-import { getTodoById, updateTodoContent } from "@/db/schema/todo";
-import { StringifiedBoolean } from "@/types/util";
+import { updateTodoContent } from "@/db/schema/todo";
 import { Type } from "@sinclair/typebox";
 import { RouteHandler } from "util/route-helper";
 
@@ -14,11 +13,6 @@ const bodySchema = Type.Object({
     error: "Content is required",
   }),
 });
-
-function toggleEditState(state: StringifiedBoolean): StringifiedBoolean {
-  if (state === "true") return "false";
-  return "true";
-}
 
 export const post: RouteHandler<typeof bodySchema, typeof paramsSchema> = {
   handler: async (context) => {
