@@ -28,6 +28,27 @@ export async function getTodoById(id: Todo["id"]) {
   return singleTodo;
 }
 
+export async function updateTodoContent(
+  id: Todo["id"],
+  content: Todo["content"]
+) {
+  const sanitizedContent = sanitizeHtml(content);
+  if (sanitizedContent.length === 0) {
+    throw new Error(`Cannot be empty`);
+  }
+
+  const currentTodo = await getTodoById(id);
+  const updatedData = await db
+    .update(todo)
+    .set({
+      content,
+    })
+    .where(eq(todo.id, currentTodo.id))
+    .returning();
+
+  return ensureSingleItem(updatedData);
+}
+
 export async function toggleTodoCompletion(id: Todo["id"]) {
   const currentTodo = await getTodoById(id);
   const updatedData = await db

@@ -20,9 +20,14 @@ export async function get() {
 
 export const post: RouteHandler<typeof bodySchema, undefined> = {
   handler: async (context) => {
-    const newTodo = await addTodo(context.body.content);
+    try {
+      const newTodo = await addTodo(context.body.content);
 
-    return <TodoItem {...newTodo} />;
+      return <TodoItem {...newTodo} />;
+    } catch (error: any) {
+      context.set.status = 400;
+      return <ServerErrorAlert message={error.message} />;
+    }
   },
   hooks: {
     body: bodySchema,

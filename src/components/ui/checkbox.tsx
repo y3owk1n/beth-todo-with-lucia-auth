@@ -1,8 +1,9 @@
 import { PropsWithChildren } from "@kitajs/html";
 import { Icons } from "../icons";
 import { cn } from "util/classname-helper";
+import { CheckState } from "@/types/util";
 
-type DataState = "checked" | "unchecked" | "indeterminate";
+type DataState = CheckState;
 
 function getDataState(checked: boolean | string | undefined): DataState {
   if (typeof checked === "boolean") {

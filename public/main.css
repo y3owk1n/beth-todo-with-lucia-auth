@@ -684,6 +684,10 @@ body {
   max-width: 350px;
 }
 
+.flex-1 {
+  flex: 1 1 0%;
+}
+
 .shrink-0 {
   flex-shrink: 0;
 }
@@ -740,6 +744,12 @@ body {
   --tw-space-y-reverse: 0;
   margin-top: calc(0.75rem * calc(1 - var(--tw-space-y-reverse)));
   margin-bottom: calc(0.75rem * var(--tw-space-y-reverse));
+}
+
+.space-y-2 > :not([hidden]) ~ :not([hidden]) {
+  --tw-space-y-reverse: 0;
+  margin-top: calc(0.5rem * calc(1 - var(--tw-space-y-reverse)));
+  margin-bottom: calc(0.5rem * var(--tw-space-y-reverse));
 }
 
 .rounded-lg {
@@ -998,6 +1008,14 @@ body {
 }
 
 .data-\[state\=unchecked\]\:hidden[data-state=unchecked] {
+  display: none;
+}
+
+.data-\[state\=false\]\:hidden[data-state=false] {
+  display: none;
+}
+
+.data-\[state\=true\]\:hidden[data-state=true] {
   display: none;
 }
 

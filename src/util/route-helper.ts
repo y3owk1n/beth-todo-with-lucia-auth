@@ -2,7 +2,7 @@ import { Context, ElysiaInstance, LocalHook } from "elysia";
 import type { App } from "../..";
 import { CookieRequest } from "@elysiajs/cookie";
 import { ElysiaErrors } from "elysia/error";
-import { Static, TSchema } from "@sinclair/typebox";
+import { Static, TSchema, Type } from "@sinclair/typebox";
 
 type PluginHtmlContext = {
   sanitize: any;
@@ -23,11 +23,10 @@ export type AppContext<
   : Params extends undefined
   ? Omit<ContextWithPlugin, "body"> & { body: Body }
   :
-      | (Omit<ContextWithPlugin, "body" | "params"> & {
+      | Omit<ContextWithPlugin, "body" | "params"> & {
           body: Body;
           params: Params;
-        })
-      | ContextWithPlugin; // Add this line to handle the case where both are undefined
+        };
 
 export type SchemaGeneric = TSchema | undefined;
 

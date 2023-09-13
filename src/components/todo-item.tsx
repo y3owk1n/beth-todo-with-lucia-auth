@@ -2,15 +2,16 @@ import { Todo } from "@/db/schema/todo";
 import { Icons } from "./icons";
 import { Button } from "./ui/button";
 import TodoCheckbox from "./todo-checkbox";
+import TodoEditable from "./todo-editable";
 
 function TodoItem(todo: Todo) {
-  const { id, content } = todo;
+  const { id } = todo;
   return (
     <div
       id={`todo-item-${id}`}
       class="flex justify-between items-center space-x-3"
     >
-      <p>{content}</p>
+      <TodoEditable editState="false" {...todo} />
       <div class="flex gap-4 items-center">
         <TodoCheckbox {...todo} />
         <Button
