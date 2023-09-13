@@ -11,7 +11,7 @@ function TodoCheckbox({ id, completed }: Todo) {
       _={`on htmx:beforeRequest remove #server-error
             on htmx:afterRequest
             if detail.successful === false
-                put detail.xhr.responseText after closest parent <div />`}
+                put detail.xhr.responseText after #todo-item-${id}`}
     />
   );
 }

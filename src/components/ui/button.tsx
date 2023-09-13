@@ -37,7 +37,9 @@ function Button({
   size,
   class: className,
   ...props
-}: PropsWithChildren<JSX.HtmlButtonTag & VariantProps<typeof buttonVariants>>) {
+}: PropsWithChildren<
+  JSX.HtmlButtonTag & VariantProps<typeof buttonVariants & Htmx.Attributes>
+>) {
   return (
     <button class={cn(buttonVariants({ variant, size, className }))} {...props}>
       {children}

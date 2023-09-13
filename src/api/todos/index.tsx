@@ -20,7 +20,6 @@ export async function get() {
 
 export const post: RouteHandler<typeof bodySchema, undefined> = {
   handler: async (context) => {
-    await Bun.sleep(3000);
     const newTodo = await addTodo(context.body.content);
 
     return <TodoItem {...newTodo} />;

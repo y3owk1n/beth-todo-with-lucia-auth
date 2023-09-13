@@ -11,10 +11,14 @@ function UserInfo(user: Session["user"]) {
         hx-ext="loading-states"
         data-loading-disable
         data-loading-busy
-        data-loading-target="#loader"
+        data-loading-target="#logout-loader"
         data-loading-class-remove="hidden"
+        data-loading-path="/api/auth/signout"
       >
-        <Icons.loader2 id="loader" class="hidden mr-2 w-6 h-6 animate-spin" />
+        <Icons.loader2
+          id="loguout-loader"
+          class="hidden mr-2 w-6 h-6 animate-spin"
+        />
         Logout
       </Button>
     </div>

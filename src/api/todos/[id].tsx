@@ -9,7 +9,6 @@ const paramsSchema = Type.Object({
 
 export const del: RouteHandler<undefined, typeof paramsSchema> = {
   handler: async (context) => {
-    await Bun.sleep(3000);
     await deleteTodoById(context.params.id);
   },
   hooks: {

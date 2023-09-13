@@ -11,10 +11,11 @@ function TodoForm() {
       hx-ext="loading-states"
       data-loading-target="#todo-form-loader"
       data-loading-class-remove="hidden"
+      data-loading-path="/api/todos"
       _="on htmx:beforeRequest remove #server-error
         on htmx:afterRequest
             if detail.successful === false
-                put detail.xhr.responseText before <button />
+                put detail.xhr.responseText after me
             else reset() me"
     >
       <Input type="text" name="content" placeholder="content" />

@@ -16,14 +16,16 @@ function TodoItem(todo: Todo) {
         <Button
           variant="destructive"
           hx-delete={`/api/todos/${id}`}
+          hx-target={`#todo-item-${id}`}
+          hx-swap="outerHTML"
           hx-ext="loading-states"
           data-loading-target={`#todo-loader-${id}`}
           data-loading-class-remove="hidden"
-          _="on htmx:beforeRequest remove #server-error
+          data-loading-path={`/api/todos/${id}`}
+          _={`on htmx:beforeRequest remove #server-error
             on htmx:afterRequest
             if detail.successful === false
-                put detail.xhr.responseText after closest parent <div />
-            else put detail.xhr.responseText into me"
+                put detail.xhr.responseText after #todo-item-${id}`}
         >
           <Icons.loader2
             id={`todo-loader-${id}`}
