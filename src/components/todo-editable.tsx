@@ -1,14 +1,7 @@
 import { Todo } from "@/db/schema/todo";
 import EditableInput from "./ui/editable-input";
-import { StringifiedBoolean } from "@/types/util";
 
-function TodoEditable({
-  id,
-  content,
-  editState,
-}: Todo & {
-  editState: StringifiedBoolean;
-}) {
+function TodoEditable({ id, content }: Todo) {
   return (
     <EditableInput
       id={id}
@@ -19,7 +12,6 @@ function TodoEditable({
       type="text"
       name="todo-content"
       value={content}
-      editState={editState}
       _={`on htmx:beforeRequest remove #server-error
             on htmx:afterRequest
             if detail.successful === false

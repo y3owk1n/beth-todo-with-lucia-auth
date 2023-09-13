@@ -11,7 +11,7 @@ function TodoItem(todo: Todo) {
       id={`todo-item-${id}`}
       class="flex justify-between items-center space-x-3"
     >
-      <TodoEditable editState="false" {...todo} />
+      <TodoEditable {...todo} />
       <div class="flex gap-4 items-center">
         <TodoCheckbox {...todo} />
         <Button

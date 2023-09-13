@@ -13,9 +13,6 @@ const bodySchema = Type.Object({
   "todo-content": Type.String({
     error: "Content is required",
   }),
-  "todo-edit-state": Type.String({
-    error: "State is required",
-  }),
 });
 
 function toggleEditState(state: StringifiedBoolean): StringifiedBoolean {
@@ -26,28 +23,16 @@ function toggleEditState(state: StringifiedBoolean): StringifiedBoolean {
 export const post: RouteHandler<typeof bodySchema, typeof paramsSchema> = {
   handler: async (context) => {
     // await Bun.sleep(3000);
-    const todoEditState = context.body["todo-edit-state"];
 
-    if (todoEditState === "false") {
-      const todo = await getTodoById(context.params.id);
-      return (
-        <TodoEditable editState={toggleEditState(todoEditState)} {...todo} />
-      );
-    }
-
-    if (todoEditState === "true") {
+    try {
       const todo = await updateTodoContent(
         context.params.id,
         context.body["todo-content"]
       );
-
-      return (
-        <TodoEditable editState={toggleEditState(todoEditState)} {...todo} />
-      );
+      return <TodoEditable {...todo} />;
+    } catch (error: any) {
+      return <ServerErrorAlert message={error.message} />;
     }
-
-    context.set.status = 400;
-    return <ServerErrorAlert message="Todo state is invalid" />;
   },
   hooks: {
     params: paramsSchema,

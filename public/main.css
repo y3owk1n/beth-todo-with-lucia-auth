@@ -684,10 +684,6 @@ body {
   max-width: 350px;
 }
 
-.flex-1 {
-  flex: 1 1 0%;
-}
-
 .shrink-0 {
   flex-shrink: 0;
 }
@@ -734,22 +730,26 @@ body {
   gap: 1rem;
 }
 
+.gap-1 {
+  gap: 0.25rem;
+}
+
 .space-x-3 > :not([hidden]) ~ :not([hidden]) {
   --tw-space-x-reverse: 0;
   margin-right: calc(0.75rem * var(--tw-space-x-reverse));
   margin-left: calc(0.75rem * calc(1 - var(--tw-space-x-reverse)));
 }
 
-.space-y-3 > :not([hidden]) ~ :not([hidden]) {
-  --tw-space-y-reverse: 0;
-  margin-top: calc(0.75rem * calc(1 - var(--tw-space-y-reverse)));
-  margin-bottom: calc(0.75rem * var(--tw-space-y-reverse));
-}
-
 .space-y-2 > :not([hidden]) ~ :not([hidden]) {
   --tw-space-y-reverse: 0;
   margin-top: calc(0.5rem * calc(1 - var(--tw-space-y-reverse)));
   margin-bottom: calc(0.5rem * var(--tw-space-y-reverse));
+}
+
+.space-y-3 > :not([hidden]) ~ :not([hidden]) {
+  --tw-space-y-reverse: 0;
+  margin-top: calc(0.75rem * calc(1 - var(--tw-space-y-reverse)));
+  margin-bottom: calc(0.75rem * var(--tw-space-y-reverse));
 }
 
 .rounded-lg {
@@ -1007,8 +1007,12 @@ body {
   opacity: 0.5;
 }
 
-.data-\[state\=unchecked\]\:hidden[data-state=unchecked] {
-  display: none;
+.data-\[state\=true\]\:block[data-state=true] {
+  display: block;
+}
+
+.data-\[state\=true\]\:grid[data-state=true] {
+  display: grid;
 }
 
 .data-\[state\=false\]\:hidden[data-state=false] {
@@ -1016,6 +1020,10 @@ body {
 }
 
 .data-\[state\=true\]\:hidden[data-state=true] {
+  display: none;
+}
+
+.data-\[state\=unchecked\]\:hidden[data-state=unchecked] {
   display: none;
 }
 
