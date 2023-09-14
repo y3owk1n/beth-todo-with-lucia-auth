@@ -19,7 +19,7 @@ function LoginForm() {
       <Input type="email" name="email" placeholder="email" />
       <Input type="password" name="password" placeholder="password" />
       <Button id="submit" data-loading-disable data-loading-busy type="submit">
-        <Icons.loader2 id="loader" class="hidden mr-2 w-6 h-6 animate-spin" />
+        <Icons.loader2 id="loader" class="hidden mr-2 w-4 h-4 animate-spin" />
         Submit
       </Button>
       <a

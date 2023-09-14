@@ -3,6 +3,22 @@ import { PropsWithChildren } from "@kitajs/html";
 import { cn } from "util/classname-helper";
 import { Icons } from "../icons";
 
+const getClosestModalId = `
+    get the closest parent <dialog /> then set modalId to its @id
+`;
+
+const getClosestFormId = `
+    get the closest parent <form /> then set formId to its @id
+`;
+
+const getNextModalId = `
+    get next <dialog /> then set modalId to its @id
+`;
+
+const getNextFormId = `
+    get next <form /> then set formId to its @id
+`;
+
 function Modal({
   children,
   class: className,
@@ -17,14 +33,17 @@ function Modal({
 
 function ModalTrigger({
   children,
-  id,
   class: className,
   ...props
 }: PropsWithChildren & JSX.HtmlButtonTag) {
   return (
     <Button
       class={cn(buttonVariants(), className)}
-      _={`on click showModal() from #modal-${id}`}
+      _={`on click toggle [@data-state=open] on #modal-overlay
+            then ${getNextFormId} 
+            then toggle [@data-state=open] on #{formId}
+            then ${getNextModalId} 
+            then showModal() from #{modalId}`}
       {...props}
     >
       {children}
@@ -39,16 +58,28 @@ function ModalOverlay({
   ...props
 }: PropsWithChildren & JSX.HtmlTag) {
   return (
-    <form
-      method="dialog"
+    <div
+      id="modal-overlay"
       class={cn(
         "fixed m-0 inset-0 z-50 bg-background/80 backdrop-blur-sm data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0",
-        className,
+        className
       )}
       {...props}
     >
-      <button class="w-full h-full focus-visible:outline-none">Close</button>
-    </form>
+      <button
+        class="w-full h-full focus-visible:outline-none"
+        _={`on click
+            ${getClosestModalId}
+            ${getNextFormId}
+            reset() from #{formId} 
+            then toggle [@data-state=close] on #{formId}
+            then toggle [@data-state=close] on #modal-overlay
+            then close() from #{modalId}
+`}
+      >
+        Close
+      </button>
+    </div>
   );
 }
 
@@ -65,7 +96,7 @@ function ModalContent({
         id={`form-${id}`}
         class={cn(
           "fixed left-[50%] top-[50%] z-50 grid w-full max-w-lg translate-x-[-50%] translate-y-[-50%] gap-4 border bg-background p-6 shadow-lg duration-200 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[state=closed]:slide-out-to-left-1/2 data-[state=closed]:slide-out-to-top-[48%] data-[state=open]:slide-in-from-left-1/2 data-[state=open]:slide-in-from-top-[48%] sm:rounded-lg md:w-full",
-          className,
+          className
         )}
         {...props}
       >
@@ -123,7 +154,7 @@ function ModalFooter({
     <div
       class={cn(
         "flex flex-col-reverse sm:flex-row sm:justify-end sm:space-x-2",
-        className,
+        className
       )}
       {...props}
     >
@@ -156,7 +187,13 @@ function ModalCancel({
       value="cancel"
       variant="outline"
       class={cn("mt-2 sm:mt-0", className)}
-      _={`on click reset() from #form-${id} then close() from #modal-${id} end`}
+      _={`on click
+            ${getClosestModalId}
+            ${getClosestFormId}
+            reset() from #{formId}
+            then toggle [@data-state=close] on #{formId}
+            then toggle [@data-state=close] on #modal-overlay
+            then close() from #{modalId} end`}
       {...props}
     >
       {children}
@@ -165,19 +202,24 @@ function ModalCancel({
 }
 
 function ModalCloseButton({
-  id,
   class: className,
 }: PropsWithChildren & JSX.HtmlButtonTag) {
   return (
     <Button
       type="button"
-      _={`on click reset() from #form-${id} then close() from #modal-${id} end`}
+      _={`on click
+            ${getClosestModalId}
+            ${getClosestFormId}
+            reset() from #{formId}
+            then toggle [@data-state=close] on #{formId}
+            then toggle [@data-state=close] on #modal-overlay
+            then close() from #{modalId} end`}
       value="cancel"
       variant="outline"
       size="icon"
       class={cn("absolute right-2 top-2", className)}
     >
-      <Icons.X class="w-6 h-6" />
+      <Icons.X class="w-4 h-4" />
     </Button>
   );
 }
