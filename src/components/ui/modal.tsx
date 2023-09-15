@@ -2,30 +2,24 @@ import { Button, buttonVariants } from "@/components/ui/button";
 import { PropsWithChildren } from "@kitajs/html";
 import { cn } from "util/classname-helper";
 import { Icons } from "../icons";
+import cuid2 from "@paralleldrive/cuid2";
 
-const getClosestModalId = `
-    get the closest parent <dialog /> then set modalId to its @id
-`;
-
-const getClosestFormId = `
-    get the closest parent <form /> then set formId to its @id
-`;
-
-const getNextModalId = `
-    get next <dialog /> then set modalId to its @id
-`;
-
-const getNextFormId = `
-    get next <form /> then set formId to its @id
-`;
+/**
+ * Hyperscript helper to get dialog element from <ModalContent/>
+ * It will return a `result` that can be used for next function
+ */
+const getDialogFromModalContent =
+  "get the closest <dialog /> to the parentElement of me";
 
 function Modal({
   children,
   class: className,
   ...props
 }: PropsWithChildren & JSX.HtmlTag) {
+  const id = cuid2.createId();
+
   return (
-    <div class={cn("", className)} {...props}>
+    <div id={`modal-${id}`} class={cn("", className)} {...props}>
       {children}
     </div>
   );
@@ -39,11 +33,9 @@ function ModalTrigger({
   return (
     <Button
       class={cn(buttonVariants(), className)}
-      _={`on click toggle [@data-state=open] on #modal-overlay
-            then ${getNextFormId} 
-            then toggle [@data-state=open] on #{formId}
-            then ${getNextModalId} 
-            then showModal() from #{modalId}`}
+      _={`on click get the closest parent <div /> 
+            then set modalId to its @id
+            then showModal() from the first <dialog /> in #{modalId}`}
       {...props}
     >
       {children}
@@ -53,7 +45,6 @@ function ModalTrigger({
 
 function ModalOverlay({
   children,
-  id,
   class: className,
   ...props
 }: PropsWithChildren & JSX.HtmlTag) {
@@ -62,19 +53,18 @@ function ModalOverlay({
       id="modal-overlay"
       class={cn(
         "fixed m-0 inset-0 z-50 bg-background/80 backdrop-blur-sm data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0",
-        className
+        className,
       )}
       {...props}
     >
       <button
         class="w-full h-full focus-visible:outline-none"
-        _={`on click
-            ${getClosestModalId}
-            ${getNextFormId}
-            reset() from #{formId} 
-            then toggle [@data-state=close] on #{formId}
-            then toggle [@data-state=close] on #modal-overlay
-            then close() from #{modalId}
+        _={`on click ${getDialogFromModalContent}
+            then set currentDialog to result
+            then get the next <form/>
+            then set currentForm to result
+            then reset() from currentForm 
+            then close() from currentDialog
 `}
       >
         Close
@@ -85,18 +75,16 @@ function ModalOverlay({
 
 function ModalContent({
   children,
-  id,
   class: className,
   ...props
 }: PropsWithChildren & Htmx.Attributes & JSX.HtmlFormTag) {
   return (
-    <dialog id={`modal-${id}`} class="">
+    <dialog class="">
       <ModalOverlay />
       <form
-        id={`form-${id}`}
         class={cn(
           "fixed left-[50%] top-[50%] z-50 grid w-full max-w-lg translate-x-[-50%] translate-y-[-50%] gap-4 border bg-background p-6 shadow-lg duration-200 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[state=closed]:slide-out-to-left-1/2 data-[state=closed]:slide-out-to-top-[48%] data-[state=open]:slide-in-from-left-1/2 data-[state=open]:slide-in-from-top-[48%] sm:rounded-lg md:w-full",
-          className
+          className,
         )}
         {...props}
       >
@@ -152,9 +140,10 @@ function ModalFooter({
 }: PropsWithChildren & JSX.HtmlTag) {
   return (
     <div
+      id="modal-footer"
       class={cn(
         "flex flex-col-reverse sm:flex-row sm:justify-end sm:space-x-2",
-        className
+        className,
       )}
       {...props}
     >
@@ -187,13 +176,13 @@ function ModalCancel({
       value="cancel"
       variant="outline"
       class={cn("mt-2 sm:mt-0", className)}
-      _={`on click
-            ${getClosestModalId}
-            ${getClosestFormId}
-            reset() from #{formId}
-            then toggle [@data-state=close] on #{formId}
-            then toggle [@data-state=close] on #modal-overlay
-            then close() from #{modalId} end`}
+      _={`on click ${getDialogFromModalContent} 
+            then set currentDialog to result
+            then get the closest <form/> to the parentElement of me
+            then set currentForm to result
+            then reset() from currentForm 
+            then close() from currentDialog
+`}
       {...props}
     >
       {children}
@@ -207,13 +196,13 @@ function ModalCloseButton({
   return (
     <Button
       type="button"
-      _={`on click
-            ${getClosestModalId}
-            ${getClosestFormId}
-            reset() from #{formId}
-            then toggle [@data-state=close] on #{formId}
-            then toggle [@data-state=close] on #modal-overlay
-            then close() from #{modalId} end`}
+      _={`on click ${getDialogFromModalContent}
+            then set currentDialog to result
+            then get the closest <form/> to the parentElement of me
+            then set currentForm to result
+            then reset() from currentForm 
+            then close() from currentDialog
+`}
       value="cancel"
       variant="outline"
       size="icon"
@@ -235,4 +224,5 @@ export {
   ModalAction,
   ModalCancel,
   ModalCloseButton,
+  getDialogFromModalContent,
 };

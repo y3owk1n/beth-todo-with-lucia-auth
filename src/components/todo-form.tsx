@@ -1,5 +1,4 @@
 import { Icons } from "./icons";
-import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 
 import {
@@ -13,10 +12,10 @@ import {
   ModalHeader,
   ModalTitle,
   ModalTrigger,
+  getDialogFromModalContent,
 } from "@/components/ui/modal";
 
 function TodoForm() {
-  const createTodoModalId = "create-todo-modal";
   return (
     <>
       <div class="flex flex-row items-center space-x-3">
@@ -28,7 +27,6 @@ function TodoForm() {
             New
           </ModalTrigger>
           <ModalContent
-            id={createTodoModalId}
             hx-target="#todo-items"
             hx-post="/api/todos"
             hx-swap="beforeend"
@@ -39,8 +37,11 @@ function TodoForm() {
             _={`on htmx:beforeRequest remove #server-error
                 on htmx:afterRequest
                     if detail.successful === false
-                        put detail.xhr.responseText before #${createTodoModalId}-footer
-                    else reset() me then close() from #modal-${createTodoModalId} end`}
+                        put detail.xhr.responseText before #modal-footer in me
+                    else reset() me 
+                        then ${getDialogFromModalContent}
+                        then close() from result
+`}
           >
             <ModalCloseButton />
             <ModalHeader>
@@ -50,8 +51,13 @@ function TodoForm() {
               </ModalDescription>
             </ModalHeader>
 
-            <Input type="text" name="content" placeholder="content" />
-            <ModalFooter id={`${createTodoModalId}-footer`}>
+            <Input
+              autofocus="true"
+              type="text"
+              name="content"
+              placeholder="content"
+            />
+            <ModalFooter>
               <ModalCancel>Cancel</ModalCancel>
               <ModalAction data-loading-disable data-loading-busy>
                 <Icons.loader2
