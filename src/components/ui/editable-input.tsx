@@ -13,13 +13,13 @@ function EditableInput({
     }
 >) {
   return (
-    <div id={`${idPrefix}-container-${props.id}`} class="space-y-2">
+    <div id={`${idPrefix}-container-${props.id}`} class="space-y-2 break-all">
       <span
         {...props}
         id={`${idPrefix}-preview-${props.id}`}
         class={cn(
-          "rounded-md w-full [&[contenteditable]]:focus:border-none [&[contenteditable]]:focus:outline-none [&[contenteditable]]:focus-visible:ring-2 [&[contenteditable]]:focus-visible:ring-ring [&[contenteditable]]:focus-visible:ring-offset-2",
-          className
+          "rounded-md w-full break-words [&[contenteditable]]:focus:border-none [&[contenteditable]]:focus:outline-none [&[contenteditable]]:focus-visible:ring-2 [&[contenteditable]]:focus-visible:ring-ring [&[contenteditable]]:focus-visible:ring-offset-2",
+          className,
         )}
         contenteditable="true"
         hx-post={`${props["hx-post"]}`}

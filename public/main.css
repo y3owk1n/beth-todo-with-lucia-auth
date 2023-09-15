@@ -861,6 +861,18 @@ body {
   overflow: hidden;
 }
 
+.whitespace-break-spaces {
+  white-space: break-spaces;
+}
+
+.break-words {
+  overflow-wrap: break-word;
+}
+
+.break-all {
+  word-break: break-all;
+}
+
 .rounded-lg {
   border-radius: var(--radius);
 }
