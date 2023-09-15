@@ -3,6 +3,7 @@ import { PropsWithChildren } from "@kitajs/html";
 import { cn } from "util/classname-helper";
 import { Icons } from "../icons";
 import cuid2 from "@paralleldrive/cuid2";
+import { hx } from "util/hyperscript-helper";
 
 /**
  * Hyperscript helper to get dialog element from <ModalContent/>
@@ -63,13 +64,12 @@ function ModalOverlay({
       <button
         class="w-full h-full focus-visible:outline-none"
         _={`on click ${getDialogFromModalContent}
-            then set currentDialog to result
-            then get the next <form/>
-            then set currentForm to result
-            then reset() from currentForm 
-            then add @data-state='closed' to the first <div /> in currentDialog
-            then add @data-state='closed' to the first <form /> in currentDialog
-            then close() from currentDialog
+                then set currentDialog to result
+                then get the next <form/>
+                then set currentForm to result
+                then reset() from currentForm 
+                then add @data-state='closed' to the first <div /> in currentDialog
+                then add @data-state='closed' to the first <form /> in currentDialog
 `}
       >
         Close
@@ -81,6 +81,7 @@ function ModalOverlay({
 function ModalContent({
   children,
   class: className,
+  _: hxs,
   ...props
 }: PropsWithChildren & Htmx.Attributes & JSX.HtmlFormTag) {
   return (
@@ -90,6 +91,18 @@ function ModalContent({
         class={cn(
           "fixed left-[50%] top-[50%] z-50 grid w-full max-w-lg translate-x-[-50%] translate-y-[-50%] gap-4 border bg-background p-6 shadow-lg duration-200 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[state=closed]:slide-out-to-left-1/2 data-[state=closed]:slide-out-to-top-[48%] data-[state=open]:slide-in-from-left-1/2 data-[state=open]:slide-in-from-top-[48%] sm:rounded-lg md:w-full",
           className,
+        )}
+        _={hx(
+          `on webkitAnimationEnd 
+            if event.animationName == 'exit' 
+                then ${getDialogFromModalContent}
+                then set currentDialog to result
+                then add .hidden to currentDialog
+                then close() from currentDialog
+                then remove .hidden from currentDialog
+            end
+        `,
+          hxs,
         )}
         {...props}
       >

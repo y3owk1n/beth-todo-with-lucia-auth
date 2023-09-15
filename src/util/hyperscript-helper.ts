@@ -11,7 +11,6 @@ type ClassArray = ClassValue[];
 
 export function hx(...args: ClassValue[]) {
   return args
-    .flat()
     .filter((x) => typeof x === "string")
     .join(" ")
     .trim();
