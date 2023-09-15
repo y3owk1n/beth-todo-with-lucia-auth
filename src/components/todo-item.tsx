@@ -3,6 +3,7 @@ import { Icons } from "./icons";
 import { Button } from "./ui/button";
 import TodoCheckbox from "./todo-checkbox";
 import TodoEditable from "./todo-editable";
+import { removeErrorMessageIfExistsBeforeHtmxRequest } from "@/lib/hyperscript";
 
 function TodoItem(todo: Todo) {
   const { id } = todo;
@@ -23,7 +24,7 @@ function TodoItem(todo: Todo) {
           data-loading-target={`#todo-loader-${id}`}
           data-loading-class-remove="hidden"
           data-loading-path={`/api/todos/${id}`}
-          _={`on htmx:beforeRequest remove #server-error
+          _={`${removeErrorMessageIfExistsBeforeHtmxRequest("#server-error")}
             on htmx:afterRequest
             if detail.successful === false
                 put detail.xhr.responseText after #todo-item-${id}`}

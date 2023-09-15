@@ -1,3 +1,4 @@
+import { removeErrorMessageIfExistsBeforeHtmxRequest } from "@/lib/hyperscript";
 import { Icons } from "./icons";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
@@ -10,11 +11,11 @@ function LoginForm() {
       hx-ext="loading-states"
       data-loading-target="#loader"
       data-loading-class-remove="hidden"
-      _="on htmx:beforeRequest remove #server-error 
+      _={`${removeErrorMessageIfExistsBeforeHtmxRequest("#server-error")}
         on htmx:afterRequest
             if detail.successful === false
                 put detail.xhr.responseText before <button />
-            else reset() me"
+            else reset() me`}
     >
       <Input type="email" name="email" placeholder="email" />
       <Input type="password" name="password" placeholder="password" />

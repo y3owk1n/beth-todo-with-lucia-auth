@@ -1,3 +1,4 @@
+import { removeErrorMessageIfExistsBeforeHtmxRequest } from "@/lib/hyperscript";
 import { Icons } from "./icons";
 import { Input } from "./ui/input";
 
@@ -34,7 +35,7 @@ function TodoForm() {
             data-loading-target="#todo-form-loader"
             data-loading-class-remove="hidden"
             data-loading-path="/api/todos"
-            _={`on htmx:beforeRequest remove #server-error
+            _={`${removeErrorMessageIfExistsBeforeHtmxRequest("#server-error")}
                 on htmx:afterRequest
                     if detail.successful === false
                         put detail.xhr.responseText before #modal-footer in me
