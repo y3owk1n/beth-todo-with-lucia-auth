@@ -7,6 +7,7 @@ import { removeErrorMessageIfExistsBeforeHtmxRequest } from "@/lib/hyperscript";
 
 function TodoItem(todo: Todo) {
   const { id } = todo;
+
   return (
     <div
       id={`todo-item-${id}`}
