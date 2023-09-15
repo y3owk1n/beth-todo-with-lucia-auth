@@ -35,7 +35,10 @@ function ModalTrigger({
       class={cn(buttonVariants(), className)}
       _={`on click get the closest parent <div /> 
             then set modalId to its @id
-            then showModal() from the first <dialog /> in #{modalId}`}
+            then showModal() from the first <dialog /> in #{modalId}
+            then add @data-state='open' to the first <div /> in #{modalId}
+            then add @data-state='open' to the first <form /> in #{modalId}
+`}
       {...props}
     >
       {children}
@@ -64,6 +67,8 @@ function ModalOverlay({
             then get the next <form/>
             then set currentForm to result
             then reset() from currentForm 
+            then add @data-state='closed' to the first <div /> in currentDialog
+            then add @data-state='closed' to the first <form /> in currentDialog
             then close() from currentDialog
 `}
       >
@@ -181,6 +186,8 @@ function ModalCancel({
             then get the closest <form/> to the parentElement of me
             then set currentForm to result
             then reset() from currentForm 
+            then add @data-state='closed' to the first <div /> in currentDialog
+            then add @data-state='closed' to the first <form /> in currentDialog
             then close() from currentDialog
 `}
       {...props}
@@ -201,6 +208,8 @@ function ModalCloseButton({
             then get the closest <form/> to the parentElement of me
             then set currentForm to result
             then reset() from currentForm 
+            then add @data-state='closed' to the first <div /> in currentDialog
+            then add @data-state='closed' to the first <form /> in currentDialog
             then close() from currentDialog
 `}
       value="cancel"

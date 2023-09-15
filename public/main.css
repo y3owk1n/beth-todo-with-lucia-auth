@@ -1023,6 +1023,42 @@ body {
   }
 }
 
+.animate-in {
+  animation-name: enter;
+  animation-duration: 150ms;
+  --tw-enter-opacity: initial;
+  --tw-enter-scale: initial;
+  --tw-enter-rotate: initial;
+  --tw-enter-translate-x: initial;
+  --tw-enter-translate-y: initial;
+}
+
+.animate-out {
+  animation-name: exit;
+  animation-duration: 150ms;
+  --tw-exit-opacity: initial;
+  --tw-exit-scale: initial;
+  --tw-exit-rotate: initial;
+  --tw-exit-translate-x: initial;
+  --tw-exit-translate-y: initial;
+}
+
+.fade-out {
+  --tw-exit-opacity: 0;
+}
+
+.fade-in {
+  --tw-enter-opacity: 0;
+}
+
+.spin-in {
+  --tw-enter-rotate: 30deg;
+}
+
+.spin-out {
+  --tw-exit-rotate: 30deg;
+}
+
 .duration-200 {
   animation-duration: 200ms;
 }
