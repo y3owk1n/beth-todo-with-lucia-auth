@@ -10,13 +10,14 @@ function TodoItem(todo: Todo) {
   return (
     <div
       id={`todo-item-${id}`}
-      class="flex justify-between items-center space-x-3"
+      class="flex justify-between items-center space-x-3 px-4 py-2 bg-muted rounded-md"
     >
       <TodoEditable {...todo} />
       <div class="flex gap-4 items-center">
         <TodoCheckbox {...todo} />
         <Button
           variant="destructive"
+          size="icon"
           hx-delete={`/api/todos/${id}`}
           hx-target={`#todo-item-${id}`}
           hx-swap="outerHTML"
@@ -31,9 +32,9 @@ function TodoItem(todo: Todo) {
         >
           <Icons.loader2
             id={`todo-loader-${id}`}
-            class="hidden mr-2 w-6 h-6 animate-spin"
+            class="hidden mr-2 w-4 h-4 animate-spin"
           />
-          Delete
+          <Icons.Trash2 class="w-4 h-4" />
         </Button>
       </div>
     </div>

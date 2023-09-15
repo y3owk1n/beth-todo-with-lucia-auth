@@ -4,6 +4,7 @@ import { cn } from "util/classname-helper";
 import { Icons } from "../icons";
 import cuid2 from "@paralleldrive/cuid2";
 import { hx } from "util/hyperscript-helper";
+import { VariantProps } from "class-variance-authority";
 
 /**
  * Hyperscript helper to get dialog element from <ModalContent/>
@@ -29,18 +30,22 @@ function Modal({
 function ModalTrigger({
   children,
   class: className,
+  variant,
+  size,
   ...props
-}: PropsWithChildren & JSX.HtmlButtonTag) {
+}: PropsWithChildren &
+  JSX.HtmlButtonTag &
+  VariantProps<typeof buttonVariants>) {
   return (
     <Button
-      class={cn(buttonVariants(), className)}
+      {...props}
+      class={cn(buttonVariants({ variant, size, className }))}
       _={`on click get the closest parent <div /> 
             then set modalId to its @id
             then showModal() from the first <dialog /> in #{modalId}
             then add @data-state='open' to the first <div /> in #{modalId}
             then add @data-state='open' to the first <form /> in #{modalId}
 `}
-      {...props}
     >
       {children}
     </Button>

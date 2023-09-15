@@ -23,9 +23,8 @@ function TodoForm() {
         <Input type="search" name="search" placeholder="search for notes..." />
 
         <Modal>
-          <ModalTrigger>
-            <Icons.Plus class="w-4 h-4 mr-2" />
-            New
+          <ModalTrigger variant="outline" size="icon" class="rounded-full p-0">
+            <Icons.Plus class="w-4 h-4" />
           </ModalTrigger>
           <ModalContent
             hx-target="#todo-items"
