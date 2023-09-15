@@ -7,7 +7,7 @@ function TodoCheckbox({ id, completed }: Todo) {
     <Checkbox
       checked={completed}
       hx-target="this"
-      hx-swap="outerHTML"
+      hx-swap="innerHTML"
       hx-post={`/api/todos/toggle/${id}`}
       _={`${removeErrorMessageIfExistsBeforeHtmxRequest("#server-error")}
             on htmx:afterRequest
