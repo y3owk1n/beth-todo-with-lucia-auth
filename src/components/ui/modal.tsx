@@ -90,7 +90,7 @@ function ModalContent({
   ...props
 }: PropsWithChildren & Htmx.Attributes & JSX.HtmlFormTag) {
   return (
-    <dialog class="">
+    <dialog>
       <ModalOverlay />
       <form
         class={cn(

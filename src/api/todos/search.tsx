@@ -1,35 +1,27 @@
 import ServerErrorAlert from "@/components/server-error-alert";
-import TodoEditable from "@/components/todo-editable";
-import { updateTodoContent } from "@/db/schema/todo";
+import TodoList from "@/components/todo-list";
+import { searchTodo } from "@/db/schema/todo";
 import { Type } from "@sinclair/typebox";
 import { RouteHandler } from "util/route-helper";
 
-const paramsSchema = Type.Object({
-  id: Type.String(),
-});
-
 const bodySchema = Type.Object({
-  "todo-content": Type.String({
+  search: Type.String({
     error: "Content is required",
   }),
 });
 
-export const post: RouteHandler<typeof bodySchema, typeof paramsSchema> = {
+export const post: RouteHandler<typeof bodySchema, undefined> = {
   handler: async (context) => {
-    // await Bun.sleep(3000);
-
     try {
-      const todo = await updateTodoContent(
-        context.params.id,
-        context.body["todo-content"],
-      );
-      return <TodoEditable {...todo} />;
+      const todos = await searchTodo(context.body.search);
+
+      return <TodoList todos={todos} />;
     } catch (error: any) {
+      context.set.status = 400;
       return <ServerErrorAlert message={error.message} />;
     }
   },
   hooks: {
-    params: paramsSchema,
     body: bodySchema,
     error: ({ error }) => {
       return <ServerErrorAlert message={error.message} />;

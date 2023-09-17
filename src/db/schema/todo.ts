@@ -1,7 +1,10 @@
 import { text, timestamp, boolean, pgTable } from "drizzle-orm/pg-core";
 import { db } from "..";
-import { eq } from "drizzle-orm";
-import { ensureSingleItem } from "../../util/db-helper";
+import { eq, like } from "drizzle-orm";
+import {
+  ensureNoUndefinedOrNull,
+  ensureSingleItem,
+} from "../../util/db-helper";
 import sanitizeHtml from "sanitize-html";
 import { createId } from "@paralleldrive/cuid2";
 
@@ -19,18 +22,23 @@ export type Todo = typeof todo.$inferSelect;
 export type NewTodo = typeof todo.$inferInsert;
 
 export async function getTodos() {
-  return await db.select().from(todo);
+  const todos = await db.query.todo.findMany({
+    orderBy: (todo, { desc }) => [desc(todo.createdAt)],
+  });
+  return todos;
 }
 
 export async function getTodoById(id: Todo["id"]) {
-  const data = await db.select().from(todo).where(eq(todo.id, id));
-  const singleTodo = ensureSingleItem(data);
+  const data = await db.query.todo.findFirst({
+    where: eq(todo.id, id),
+  });
+  const singleTodo = ensureNoUndefinedOrNull(data);
   return singleTodo;
 }
 
 export async function updateTodoContent(
   id: Todo["id"],
-  content: Todo["content"]
+  content: Todo["content"],
 ) {
   const sanitizedContent = sanitizeHtml(content);
   if (sanitizedContent.length === 0) {
@@ -83,4 +91,15 @@ export async function addTodo(content: Todo["content"]) {
   const singleTodo = ensureSingleItem(data);
 
   return singleTodo;
+}
+
+export async function searchTodo(content: Todo["content"]) {
+  const sanitizedContent = sanitizeHtml(content);
+  if (sanitizedContent.length === 0) {
+    return await getTodos();
+  }
+
+  const data = await db.select().from(todo).where(like(todo.content, content));
+
+  return data;
 }

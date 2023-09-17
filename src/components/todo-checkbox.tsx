@@ -5,9 +5,10 @@ import { removeErrorMessageIfExistsBeforeHtmxRequest } from "@/lib/hyperscript";
 function TodoCheckbox({ id, completed }: Todo) {
   return (
     <Checkbox
+      id={id}
       checked={completed}
-      hx-target="this"
-      hx-swap="innerHTML"
+      hx-target="closest label"
+      hx-swap="outerHTML"
       hx-post={`/api/todos/toggle/${id}`}
       _={`${removeErrorMessageIfExistsBeforeHtmxRequest("#server-error")}
             on htmx:afterRequest

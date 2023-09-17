@@ -18,59 +18,66 @@ import {
 
 function TodoForm() {
   return (
-    <>
-      <div class="flex flex-row items-center space-x-3">
-        <Input type="search" name="search" placeholder="search for notes..." />
+    <div class="flex flex-row items-center space-x-3">
+      <Input
+        type="search"
+        name="search"
+        placeholder="Search for notes..."
+        hx-target="#todo-list"
+        hx-post="/api/todos/search"
+        hx-swap-oob="innerHTML"
+        hx-trigger="keyup changed delay:500ms, search"
+      />
 
-        <Modal>
-          <ModalTrigger variant="outline" size="icon" class="rounded-full p-0">
-            <Icons.Plus class="w-4 h-4" />
-          </ModalTrigger>
-          <ModalContent
-            hx-target="#todo-items"
-            hx-post="/api/todos"
-            hx-swap="beforeend"
-            hx-ext="loading-states"
-            data-loading-target="#todo-form-loader"
-            data-loading-class-remove="hidden"
-            data-loading-path="/api/todos"
-            _={`${removeErrorMessageIfExistsBeforeHtmxRequest("#server-error")}
+      <Modal>
+        <ModalTrigger variant="outline" size="icon" class="rounded-full p-0">
+          <Icons.Plus class="w-4 h-4" />
+        </ModalTrigger>
+        <ModalContent
+          hx-target="#todo-list"
+          hx-post="/api/todos"
+          hx-swap="afterbegin"
+          hx-ext="loading-states"
+          data-loading-target="#todo-form-loader"
+          data-loading-class-remove="hidden"
+          data-loading-path="/api/todos"
+          _={`${removeErrorMessageIfExistsBeforeHtmxRequest("#server-error")}
                 on htmx:afterRequest
                     if detail.successful === false
                         put detail.xhr.responseText before #modal-footer in me
                     else reset() me 
                         then ${getDialogFromModalContent}
                         then close() from result
+                    end
 `}
-          >
-            <ModalCloseButton />
-            <ModalHeader>
-              <ModalTitle>Create New Todo</ModalTitle>
-              <ModalDescription>
-                Write something and let&apos;s get it going!
-              </ModalDescription>
-            </ModalHeader>
+        >
+          <ModalCloseButton />
+          <ModalHeader>
+            <ModalTitle>Create New Todo</ModalTitle>
+            <ModalDescription>
+              Write something and let&apos;s get it going!
+            </ModalDescription>
+          </ModalHeader>
 
-            <Input
-              autofocus="true"
-              type="text"
-              name="content"
-              placeholder="content"
-            />
-            <ModalFooter>
-              <ModalCancel>Cancel</ModalCancel>
-              <ModalAction data-loading-disable data-loading-busy>
-                <Icons.loader2
-                  id="todo-form-loader"
-                  class="hidden mr-2 w-4 h-4 animate-spin"
-                />
-                Continue
-              </ModalAction>
-            </ModalFooter>
-          </ModalContent>
-        </Modal>
-      </div>
-    </>
+          <Input
+            autofocus="true"
+            type="text"
+            name="content"
+            placeholder="content"
+          />
+          <ModalFooter>
+            <ModalCancel>Cancel</ModalCancel>
+            <ModalAction data-loading-disable data-loading-busy>
+              <Icons.loader2
+                id="todo-form-loader"
+                class="hidden mr-2 w-4 h-4 animate-spin"
+              />
+              Continue
+            </ModalAction>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
+    </div>
   );
 }
 

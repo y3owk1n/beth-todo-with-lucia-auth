@@ -1,6 +1,7 @@
 import BaseHtml from "@/components/base-html";
 import { NonDashboardLayout } from "@/components/layout/non-dashboard";
 import TodoList from "@/components/todo-list";
+import TodoListContainer from "@/components/todo-list-container";
 import { getTodos } from "@/db/schema/todo";
 
 export async function get() {
@@ -14,7 +15,9 @@ export async function get() {
           hx-trigger="load"
           hx-swap="innerHTML"
         ></div>
-        <TodoList todos={todos} />
+        <TodoListContainer>
+          <TodoList todos={todos} />
+        </TodoListContainer>
       </NonDashboardLayout>
     </BaseHtml>
   );

@@ -4,3 +4,10 @@ export function ensureSingleItem<T>(arr: T[]): T {
   }
   return arr[0];
 }
+
+export function ensureNoUndefinedOrNull<T>(data: T | undefined | null): T {
+  if (!data) {
+    throw new Error(`No data found`);
+  }
+  return data;
+}

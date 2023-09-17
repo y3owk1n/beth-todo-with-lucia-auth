@@ -1,5 +1,4 @@
 import { PropsWithChildren } from "@kitajs/html";
-import cuid2 from "@paralleldrive/cuid2";
 import { cn } from "util/classname-helper";
 import { hx } from "util/hyperscript-helper";
 
@@ -8,14 +7,13 @@ import { hx } from "util/hyperscript-helper";
  * @param {string} class - Use :before to style the checkbox
  */
 function Checkbox({
+  id,
   class: className,
   checked,
   children,
   _: hxs,
   ...props
 }: PropsWithChildren<JSX.HtmlInputTag & Htmx.Attributes>) {
-  const id = cuid2.createId();
-
   return (
     <label
       id={`checkbox-${id}`}

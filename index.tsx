@@ -1,4 +1,4 @@
-import Elysia from "elysia";
+import { Elysia } from "elysia";
 import { html } from "@elysiajs/html";
 import cookie from "@elysiajs/cookie";
 import { autoroutes } from "elysia-autoroutes";
